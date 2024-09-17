@@ -66,6 +66,10 @@ pert_resset = 0
 for i in range(len(t) - 1):
     sum_x = 0
     sum_y = 0
+
+    for k in range(Nosc):
+        sum_x = sum_x+X[k,i] 
+        sum_y = sum_y+Y[k,i] 
     
     if int((tf*0.0)/dt)<i<int((tf*0.05)/dt):
         gaussian = 0.01*np.exp(-(i*dt)**2/(2*2**2))
@@ -82,9 +86,6 @@ for i in range(len(t) - 1):
         XX[m,i+1] = XX[m,i]+dt*(mid*XX[m,i]-2*np.pi*YY[m,i]/period_cell[m]+eps*(X[m,i]+XX[m,i])/2)
         YY[m,i+1] = YY[m,i]+dt*(mid*YY[m,i]+2*np.pi*XX[m,i]/period_cell[m]+eps*(Y[m,i]+YY[m,i])/2)
 
-        for k in range(Nosc):
-            sum_x = sum_x+X[k,i] 
-            sum_y = sum_y+Y[k,i] 
     
             
 
