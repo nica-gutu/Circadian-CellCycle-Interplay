@@ -79,6 +79,9 @@ for mm in range(len(extra)):
         for i in range(len(t)-1):
             sum_x = 0
             sum_y = 0
+            for k in range(N):
+                sum_x = sum_x+X[k,i] #global coupling
+                sum_y = sum_y+Y[k,i] #global coupling
             for m in range(N):
                 middle = -gg*(np.sqrt(X[m,i]**2+Y[m,i]**2)-a0)
                 X[m,i+1] = X[m,i]+dt*(middle*X[m,i]-2*np.pi*Y[m,i]/circ_per[m]+sum_x*kappa/(2*N))
@@ -87,9 +90,7 @@ for mm in range(len(extra)):
                 mid = -ll*(np.sqrt(XX[m,i]**2+YY[m,i]**2)-acc)
                 XX[m,i+1] = XX[m,i]+dt*(mid*XX[m,i]-2*np.pi*YY[m,i]/cell_per[m]+eps*(X[m,i]+XX[m,i])/2)
                 YY[m,i+1] = YY[m,i]+dt*(mid*YY[m,i]+2*np.pi*XX[m,i]/cell_per[m]+eps*(Y[m,i]+YY[m,i])/2)        
-                for k in range(N):
-                    sum_x = sum_x+X[k,i] #global coupling
-                    sum_y = sum_y+Y[k,i] #global coupling
+
         
         ph_diff = pd.DataFrame(columns=np.arange(0, N, step=1))
         for m in range(N):
