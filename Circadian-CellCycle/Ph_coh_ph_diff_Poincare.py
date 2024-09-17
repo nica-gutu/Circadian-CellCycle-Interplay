@@ -64,7 +64,11 @@ for kappa in kappa_vect:
         for i in range(len(t) - 1):
             sum_x = 0
             sum_y = 0
-            
+
+            for k in range(Nosc):
+                sum_x = sum_x+X[k,i] 
+                sum_y = sum_y+Y[k,i] 
+                
             for m in range(Nosc):
                 middle = -gg*(np.sqrt(X[m,i]**2+Y[m,i]**2)-a0)
                 X[m,i+1] = X[m,i]+dt*(middle*X[m,i]-2*np.pi*Y[m,i]/period_circ[m]+sum_x*kappa/(2*Nosc))
@@ -73,10 +77,7 @@ for kappa in kappa_vect:
                 mid = -ll*(np.sqrt(XX[m,i]**2+YY[m,i]**2)-acc)
                 XX[m,i+1] = XX[m,i]+dt*(mid*XX[m,i]-2*np.pi*YY[m,i]/period_cell[m]+eps*(X[m,i]+XX[m,i])/2)
                 YY[m,i+1] = YY[m,i]+dt*(mid*YY[m,i]+2*np.pi*XX[m,i]/period_cell[m]+eps*(Y[m,i]+YY[m,i])/2)
-        
-                for k in range(Nosc):
-                    sum_x = sum_x+X[k,i] 
-                    sum_y = sum_y+Y[k,i] 
+    
                     
         #Phase coherence of phase differences    
         ph_diff = pd.DataFrame(columns=np.arange(0, Nosc, step=1))
