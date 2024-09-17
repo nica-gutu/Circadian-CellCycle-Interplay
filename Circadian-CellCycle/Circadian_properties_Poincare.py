@@ -67,6 +67,9 @@ for kk in range(len(kappa_vect)):
     for i in range(len(t) - 1):
         sum_x = 0
         sum_y = 0
+        for k in range(Nosc):
+            sum_x = sum_x+X[k,i] 
+            sum_y = sum_y+Y[k,i] 
         
         if int((tf*0.0)/dt)<i<int((tf*0.05)/dt):
             gaussian = 0.01*np.exp(-(i*dt)**2/(2*1**2))
@@ -79,9 +82,7 @@ for kk in range(len(kappa_vect)):
             X[m,i+1] = X[m,i]+dt*(middle*X[m,i]-2*np.pi*Y[m,i]/period_circ[m]+sum_x*kappa/(2*Nosc)+pert_resset)
             Y[m,i+1] = Y[m,i]+dt*(middle*Y[m,i]+2*np.pi*X[m,i]/period_circ[m]+sum_y*kappa/(2*Nosc))
                 
-            for k in range(Nosc):
-                sum_x = sum_x+X[k,i] 
-                sum_y = sum_y+Y[k,i] 
+
     osc = 0
     for ii in range(Nosc):
         osc += np.sin(np.arctan2(Y[ii], X[ii]))
