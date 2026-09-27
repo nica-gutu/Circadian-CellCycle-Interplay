@@ -1,77 +1,107 @@
 # Circadian coupling, cell-cycle coordination, and cell growth
 
-Analysis and modeling code supporting the study **“Circadian coupling orchestrates cell growth”** (*Nature Physics*, 2025).
+Analysis and modeling code related to:
 
-**Publication:** https://doi.org/10.1038/s41567-025-02838-4
+**Gutu, N. et al. “Circadian coupling orchestrates cell growth.” _Nature Physics_ 21, 768–777 (2025).**  
+https://doi.org/10.1038/s41567-025-02838-4
 
-## Scientific question
+## Overview
 
-This project investigates how communication between single-cell circadian oscillators influences coordination between the **circadian clock**, the **cell cycle**, and collective cell growth.
+This project investigates how **extracellular coupling between single-cell circadian oscillators** influences coordination between the circadian clock, the cell cycle, and collective cell growth.
 
-The study combines coupled-oscillator modeling with long-term live-cell measurements, perturbation experiments, quantitative time-series analysis, and machine-learning-assisted bioimage analysis. The central goal is to understand how loss of extracellular circadian synchronization changes clock–cell-cycle coordination within individual cells and how these changes propagate to tissue-level growth dynamics.
+The study combines coupled-oscillator theory with long-term population and single-cell recordings, live-cell imaging, perturbation experiments, and machine-learning-assisted image analysis. The central question is whether tissue-level circadian synchronization merely synchronizes clocks or also changes intracellular clock–cell-cycle coordination and, consequently, proliferation.
 
-## Repository contents
+## Experimental and computational framework
 
-The code is grouped by the biological scale or analysis represented in the study.
+The study uses human U2OS cell systems with circadian and cell-cycle reporters. Single-cell recordings quantify circadian dynamics and division timing, while population-level measurements quantify confluence and growth.
+
+Circadian coupling is perturbed in complementary ways, including:
+
+- pharmacological inhibition of TGF-β signaling with **LY2109761**;
+- changes in cell density;
+- genetic disruption of the circadian clock, including **Cry1/Cry2 double-knockout** cells.
+
+A coupled-oscillator model is used to separate **extracellular circadian coupling** from **intracellular coupling between the circadian clock and cell cycle**, and to study how both determine synchronization and phase locking.
+
+Single-cell image sequences were processed using an automated pipeline that included supervised pixel/object classification, segmentation, tracking, and signal extraction with **ilastik**.
+
+## Main findings represented by the analyses
+
+- Increasing extracellular coupling increases synchronization among cellular circadian oscillators.
+- Weakening extracellular circadian coupling accelerates circadian desynchronization.
+- Loss of circadian synchronization disrupts phase coordination between the circadian clock and cell cycle within individual cells.
+- Reduced circadian coupling is associated with altered cell-cycle timing and impaired collective growth.
+- Coherent circadian populations display **oscillatory growth dynamics**, linking circadian synchronization to tissue-level proliferation.
+- Genetic disruption of the core clock removes the coupling-dependent growth effect, supporting a specific role for circadian-clock regulation rather than a nonspecific drug effect.
+
+Together, the results support a multiscale mechanism in which cell-to-cell circadian communication influences intracellular clock–cell-cycle coordination and thereby regulates population growth.
+
+## Repository structure
 
 ### `Circadian-CellCycle/`
 
-Analysis and modeling of circadian-clock and cell-cycle dynamics, including:
+Circadian-clock and cell-cycle analyses, including:
 
-- circadian period and amplitude measurements;
-- phase coherence and phase-locking analyses;
+- circadian period and amplitude;
+- phase coherence and phase locking;
 - coupled-oscillator simulations;
-- entrainment regions and parameter-space exploration;
-- comparison of experimental and model-derived circadian properties.
+- extracellular/intracellular coupling parameter sweeps;
+- entrainment regions;
+- comparison of model and experimental dynamics.
 
 ### `Population-proliferation/`
 
-Population-level proliferation analyses, including growth under altered circadian coordination and comparison of wild-type and clock-perturbed conditions.
+Population-level proliferation and growth analyses, including the effects of altered circadian coordination and comparison of wild-type and clock-disrupted conditions.
 
 ### `Single-cell-proliferation/`
 
-Single-cell proliferation analyses, including intermitotic-time distributions, oscillatory periods, and proliferation-related measurements.
+Single-cell proliferation analyses, including intermitotic-time distributions, oscillatory periods, and division-related measurements.
 
-The repository contains research-analysis scripts corresponding to analyses and figures from the study rather than a packaged software library.
-
-## Computational approaches
+## Computational methods
 
 Methods represented in the repository include:
 
 - coupled nonlinear oscillator models;
 - numerical simulation of interacting circadian and cell-cycle oscillators;
-- single-cell and population-level time-series analysis;
-- circadian amplitude, period, and phase-coherence quantification;
-- wavelet-based signal analysis using `pyBOAT`;
-- proliferation and intermitotic-time analysis;
-- integration of experimental measurements with mathematical models.
+- parameter-space and entrainment-region analysis;
+- circadian amplitude, period, phase, and phase-coherence quantification;
+- time-frequency analysis using `pyBOAT`;
+- single-cell and population-level proliferation analysis;
+- fitting of population growth curves;
+- integration of experimental recordings with mathematical modeling.
 
-The experimental workflow associated with the study also used machine-learning-based bioimage analysis with **ilastik** for single-cell tracking and feature extraction.
+## Software
 
-## Requirements
-
-The scripts are written in Python. Core dependencies used across the repository include:
+The published study reports Python 3.8.8 and the following core analysis packages:
 
 ```text
-numpy
-pandas
-matplotlib
-pyboat
+numpy 1.23.3
+pandas 1.4.4
+matplotlib 3.6.3
+seaborn 0.11.2
+scipy 1.9.1
+scikit-image 0.20.0
+pyBOAT 0.9.1
 ```
 
-Some scripts may use additional scientific-Python packages depending on the analysis.
+The imaging workflow additionally used **ilastik** for supervised segmentation, tracking, and signal extraction.
 
 ## Data and reproducibility
 
-The repository primarily contains the analysis and modeling code. Raw experimental imaging and measurement datasets are **not included here**. Some scripts contain analysis-specific input/output paths and therefore require the relevant source data and local path configuration before they can be rerun.
+The experimental raw data and processed tables associated with the study are publicly available on Figshare:
 
-The folder structure follows the main analysis components of the paper, making it possible to locate the code associated with circadian–cell-cycle dynamics, population growth, and single-cell proliferation separately.
+**Dataset:** https://doi.org/10.6084/m9.figshare.28375358.v1
+
+The publication lists the primary study code at:
+
+- https://github.com/Granada-Lab/Circadian-clock-cell-cycle
+- https://github.com/Granada-Lab/Automatic-single-cell-tracking-of-fading-objects
+
+Some scripts in this personal repository retain analysis-specific paths from the original research environment and may require path adjustment before execution.
 
 ## Citation
 
-If you use this code or build on these analyses, please cite:
-
-> Gutu, N., Nordentoft, M.S., Kuhn, M. et al. **Circadian coupling orchestrates cell growth.** *Nature Physics* 21, 768–777 (2025). https://doi.org/10.1038/s41567-025-02838-4
+> Gutu, N., Nordentoft, M.S., Kuhn, M. et al. **Circadian coupling orchestrates cell growth.** _Nature Physics_ 21, 768–777 (2025). https://doi.org/10.1038/s41567-025-02838-4
 
 ## Contact
 
